@@ -5,6 +5,8 @@ const resolvePorts = (portType, data) => {
   switch (portType) {
     case "string":
       return data.string;
+    case "number":
+      return data.number;
     case "image":
       return data.image;
     default:
@@ -14,12 +16,12 @@ const resolvePorts = (portType, data) => {
 
 const resolveNodes = (node, inputValues, nodeType, context) => {
   switch (node.type) {
-    case "string":
-      return { string: inputValues.string };
+    case "numberToString":
+      return { string: String(inputValues.number) };
     case "image":
       return { image: inputValues.image };
     case "frameCount":
-      return { string: String(context.frameCount) };
+      return { number: context.frameCount };
     case "ending":
       return { title: inputValues.title, image: inputValues.image };
     default:

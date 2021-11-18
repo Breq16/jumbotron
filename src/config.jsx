@@ -17,6 +17,18 @@ config
     ],
   })
   .addPortType({
+    type: "number",
+    name: "number",
+    label: "Number",
+    color: Colors.blue,
+    controls: [
+      Controls.number({
+        name: "number",
+        label: "Number",
+      }),
+    ],
+  })
+  .addPortType({
     type: "image",
     name: "image",
     label: "Image",
@@ -32,10 +44,10 @@ config
     ],
   })
   .addNodeType({
-    type: "string",
-    label: "Text",
-    description: "Outputs a string of text",
-    inputs: (ports) => [ports.string()],
+    type: "numberToString",
+    label: "Print Number",
+    description: "Convert a number to a string",
+    inputs: (ports) => [ports.number()],
     outputs: (ports) => [ports.string()],
   })
   .addNodeType({
@@ -49,7 +61,7 @@ config
     type: "frameCount",
     label: "Frame Count",
     description: "Outputs the current frame count",
-    outputs: (ports) => [ports.string()],
+    outputs: (ports) => [ports.number()],
   })
   .addRootNodeType({
     type: "ending",
