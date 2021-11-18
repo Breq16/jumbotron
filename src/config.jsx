@@ -1,4 +1,5 @@
 import { FlumeConfig, Colors, Controls } from "flume";
+import ImageInput from "./ImageInput";
 
 const config = new FlumeConfig();
 
@@ -15,12 +16,34 @@ config
       }),
     ],
   })
+  .addPortType({
+    type: "image",
+    name: "image",
+    label: "Image",
+    color: Colors.blue,
+    controls: [
+      Controls.custom({
+        name: "image",
+        label: "Image",
+        render: (data, onChange) => (
+          <ImageInput data={data} onChange={onChange} />
+        ),
+      }),
+    ],
+  })
   .addNodeType({
     type: "string",
     label: "Text",
     description: "Outputs a string of text",
     inputs: (ports) => [ports.string()],
     outputs: (ports) => [ports.string()],
+  })
+  .addNodeType({
+    type: "image",
+    label: "Image",
+    description: "Outputs an image",
+    inputs: (ports) => [ports.image()],
+    outputs: (ports) => [ports.image()],
   })
   .addRootNodeType({
     type: "ending",
@@ -30,9 +53,9 @@ config
         name: "title",
         label: "Title",
       }),
-      ports.string({
+      ports.image({
         name: "text",
-        label: "Text",
+        label: "Image",
       }),
     ],
   });
