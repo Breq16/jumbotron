@@ -24,6 +24,8 @@ const resolveNodes = (node, inputValues, nodeType, context) => {
       return { number: context.frameCount };
     case "ending":
       return { title: inputValues.title, image: inputValues.image };
+    case "multiplexer":
+      return { image: inputValues[`image${inputValues.index}`] };
     default:
       throw new Error(`Unknown node type: ${node.type}`);
   }
