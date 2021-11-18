@@ -18,11 +18,15 @@ const resolveNodes = (node, inputValues, nodeType, context) => {
       return { string: inputValues.string };
     case "image":
       return { image: inputValues.image };
+    case "frameCount":
+      return { string: String(context.frameCount) };
+    case "ending":
+      return { title: inputValues.title, image: inputValues.image };
     default:
-      return inputValues;
+      throw new Error(`Unknown node type: ${node.type}`);
   }
 };
 
-const engine = new RootEngine(config, resolvePorts);
+const engine = new RootEngine(config, resolvePorts, resolveNodes);
 
 export default engine;

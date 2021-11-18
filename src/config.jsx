@@ -45,6 +45,12 @@ config
     inputs: (ports) => [ports.image()],
     outputs: (ports) => [ports.image()],
   })
+  .addNodeType({
+    type: "frameCount",
+    label: "Frame Count",
+    description: "Outputs the current frame count",
+    outputs: (ports) => [ports.string()],
+  })
   .addRootNodeType({
     type: "ending",
     label: "End",
