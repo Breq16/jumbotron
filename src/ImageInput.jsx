@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function ImageInput({ data, onChange }) {
-  const [image, setImage] = React.useState(null);
+  const [image, setImage] = React.useState(data?.image);
 
   return (
     <div>

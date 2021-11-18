@@ -54,7 +54,7 @@ config
         label: "Title",
       }),
       ports.image({
-        name: "text",
+        name: "image",
         label: "Image",
       }),
     ],
