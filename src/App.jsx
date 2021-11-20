@@ -2,9 +2,9 @@ import React from "react";
 import { NodeEditor, useRootEngine } from "flume";
 import config from "./config";
 import engine from "./engine";
+import Preview from "./Preview";
 
-function App() {
-  const [nodes, setNodes] = React.useState({});
+function useFrameCount() {
   const [frame, setFrame] = React.useState(0);
 
   React.useEffect(() => {
@@ -15,8 +15,18 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
+  return frame;
+}
+
+function App() {
+  const [nodes, setNodes] = React.useState({});
+
+  const frame = useFrameCount();
+  const filesystem = React.useRef(null);
+
   const { title, image } = useRootEngine(nodes, engine, {
     frameCount: frame,
+    filesystem: filesystem.current,
   });
 
   return (
@@ -34,10 +44,25 @@ function App() {
           },
         ]}
       />
-      <div style={{ position: "absolute", top: 0, left: 0 }}>
-        <h1 style={{ color: "white" }}>{title}</h1>
-        <img src={image} style={{ maxWidth: "25%", opacity: 0.5 }} />
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          maxWidth: "25%",
+          opacity: 0.5,
+        }}
+      >
+        <Preview image={image} filesystem={filesystem.current} />
       </div>
+      <button
+        style={{ position: "absolute", top: 0, right: 0 }}
+        onClick={async () => {
+          filesystem.current = await window.showDirectoryPicker();
+        }}
+      >
+        load files
+      </button>
     </div>
   );
 }

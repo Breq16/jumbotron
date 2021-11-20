@@ -1,5 +1,4 @@
 import { FlumeConfig, Colors, Controls } from "flume";
-import ImageInput from "./ImageInput";
 
 const config = new FlumeConfig();
 
@@ -34,12 +33,9 @@ config
     label: "Image",
     color: Colors.blue,
     controls: [
-      Controls.custom({
+      Controls.text({
         name: "image",
-        label: "Image",
-        render: (data, onChange) => (
-          <ImageInput data={data} onChange={onChange} />
-        ),
+        label: "Image Name",
       }),
     ],
   })
