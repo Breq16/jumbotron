@@ -20,12 +20,17 @@ const resolveNodes = (node, inputValues, nodeType, context) => {
       return { string: String(inputValues.number) };
     case "image":
       return { image: inputValues.image };
+    case "divide":
+      return { number: inputValues.number / inputValues.number2 };
     case "frameCount":
       return { number: context.frameCount };
     case "ending":
       return { title: inputValues.title, image: inputValues.image };
     case "multiplexer":
-      return { image: inputValues[`image${inputValues.index}`] };
+      return {
+        image:
+          inputValues[`image${(inputValues.index | 0) % inputValues.count}`],
+      };
     default:
       throw new Error(`Unknown node type: ${node.type}`);
   }

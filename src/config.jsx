@@ -64,6 +64,13 @@ config
     outputs: (ports) => [ports.number()],
   })
   .addNodeType({
+    type: "divide",
+    label: "Divide",
+    description: "Divide two numbers",
+    inputs: (ports) => [ports.number(), ports.number({ name: "number2" })],
+    outputs: (ports) => [ports.number()],
+  })
+  .addNodeType({
     type: "multiplexer",
     label: "Multiplexer",
     description: "Multiplexes multiple image inputs",
