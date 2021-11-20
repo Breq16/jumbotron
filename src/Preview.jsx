@@ -6,7 +6,7 @@ export default function Preview({ image, filesystem }) {
   React.useEffect(async () => {
     const stills = await filesystem.getDirectoryHandle("stills");
 
-    const handle = await stills.getFileHandle(`${image}.png`, {
+    const handle = await stills.getFileHandle(image, {
       create: false,
     });
 

@@ -33,9 +33,14 @@ config
     label: "Image",
     color: Colors.blue,
     controls: [
-      Controls.text({
+      Controls.select({
         name: "image",
-        label: "Image Name",
+        label: "Image",
+        getOptions: (inputData, executionContext) =>
+          executionContext.stills.map((name) => ({
+            value: name,
+            label: name,
+          })),
       }),
     ],
   })

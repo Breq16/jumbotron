@@ -23,8 +23,35 @@ function App() {
 
   const frame = useFrameCount();
   const filesystem = React.useRef(null);
+  const [stills, setStills] = React.useState([]);
+  const [videos, setVideos] = React.useState([]);
 
-  const { title, image } = useRootEngine(nodes, engine, {
+  React.useEffect(async () => {
+    if (!filesystem.current) {
+      return;
+    }
+
+    const stillsHandle = await filesystem.current.getDirectoryHandle("stills");
+    const videosHandle = await filesystem.current.getDirectoryHandle("videos");
+
+    let stills = [];
+    let videos = [];
+
+    for await (const entry of stillsHandle.values()) {
+      if (entry.kind === "file" && entry.name.endsWith(".png")) {
+        stills.push(entry.name);
+      }
+    }
+
+    for await (const entry of videosHandle.values()) {
+      console.log(entry);
+    }
+
+    setStills(stills);
+    setVideos(videos);
+  }, [filesystem.current]);
+
+  const { image } = useRootEngine(nodes, engine, {
     frameCount: frame,
     filesystem: filesystem.current,
   });
@@ -43,6 +70,10 @@ function App() {
             y: 100,
           },
         ]}
+        context={{
+          stills,
+          videos,
+        }}
       />
       <div
         style={{
