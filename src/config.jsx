@@ -31,7 +31,7 @@ config
     type: "image",
     name: "image",
     label: "Image",
-    color: Colors.blue,
+    color: Colors.red,
     controls: [
       Controls.select({
         name: "image",
@@ -62,14 +62,23 @@ config
     type: "frameCount",
     label: "Frame Count",
     description: "Outputs the current frame count",
-    outputs: (ports) => [ports.number()],
+    outputs: (ports) => [ports.number({ label: "Current Frame Index" })],
   })
   .addNodeType({
     type: "divide",
     label: "Divide",
     description: "Divide two numbers",
-    inputs: (ports) => [ports.number(), ports.number({ name: "number2" })],
-    outputs: (ports) => [ports.number()],
+    inputs: (ports) => [
+      ports.number({
+        name: "number",
+        label: "Dividend",
+      }),
+      ports.number({
+        name: "number2",
+        label: "Divisor",
+      }),
+    ],
+    outputs: (ports) => [ports.number({ label: "Quotient" })],
   })
   .addNodeType({
     type: "multiplexer",
@@ -89,19 +98,15 @@ config
         ...imageInputs,
       ];
     },
-    outputs: (ports) => [ports.image()],
+    outputs: (ports) => [ports.image({ label: "Selected" })],
   })
   .addRootNodeType({
     type: "ending",
-    label: "End",
+    label: "Display",
     inputs: (ports) => [
-      ports.string({
-        name: "title",
-        label: "Title",
-      }),
       ports.image({
         name: "image",
-        label: "Image",
+        label: "Output",
       }),
     ],
   });
